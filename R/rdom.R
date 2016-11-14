@@ -9,8 +9,6 @@
 #' If \code{css} is missing, then this argument is ignored.
 #' @param timeout maximum time to wait for page to load and render, in seconds.
 #' @param filename A character string specifying a filename to store result
-#' @param encoding A character string specifying a encoding type ,default utf-8
-
 #' @export
 #' @importFrom XML htmlParse
 #' @importFrom XML xmlChildren
@@ -28,7 +26,7 @@
 #' }
 #'
 
-rdom <- function(url, css, all, timeout, filename, encoding) {
+rdom <- function(url, css, all, timeout, filename, encoding = character()) {
   if (missing(url)) stop('Please specify a url.')
   args <- list(
     system.file('rdomjs/rdom.js', package = 'rdom'),
