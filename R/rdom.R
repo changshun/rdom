@@ -9,6 +9,8 @@
 #' If \code{css} is missing, then this argument is ignored.
 #' @param timeout maximum time to wait for page to load and render, in seconds.
 #' @param filename A character string specifying a filename to store result
+#' @param encoding A character string specifying a encoding type ,default utf-8
+
 #' @export
 #' @importFrom XML htmlParse
 #' @importFrom XML xmlChildren
@@ -26,7 +28,7 @@
 #' }
 #'
 
-rdom <- function(url, css, all, timeout, filename) {
+rdom <- function(url, css, all, timeout, filename, encoding) {
   if (missing(url)) stop('Please specify a url.')
   args <- list(
     system.file('rdomjs/rdom.js', package = 'rdom'),
@@ -35,7 +37,8 @@ rdom <- function(url, css, all, timeout, filename) {
     css %||% NA,
     all %||% FALSE,
     timeout %||% 5,
-    filename %||% NA
+    filename %||% NA,
+    encoding %||% "utf-8"
   )
   args <- lapply(args, jsonlite::toJSON, auto_unbox = TRUE)
   phantom_bin <- find_phantom()
@@ -51,9 +54,9 @@ rdom <- function(url, css, all, timeout, filename) {
   st <- attr(res, 'status')
   if (!is.null(st)) stop(paste(res, '\n'))
   p <- if (missing(filename)) {
-    XML::htmlParse(res, asText = TRUE)
+    XML::htmlParse(res, asText = TRUE, encoding = encoding)
   } else {
-    XML::htmlParse(filename)
+    XML::htmlParse(filename, encoding = encoding)
   }
   # If the result is a node or node list, htmlParse() inserts them into
   # the body of a bare-bones HTML page.
