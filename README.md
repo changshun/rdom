@@ -14,7 +14,7 @@ stopifnot(Sys.which("phantomjs") != "")
 **rdom** currently isn't on CRAN, but you can install it with devtools
 
 ```r
-devtools::install_github("cpsievert/rdom")
+devtools::install_github("changshun/rdom")
 ```
 
 ### Introduction
